@@ -1,0 +1,17 @@
+name: Boundsoul
+version: ${project.version}
+main: net.augcloud.boundsoul.Main
+authors: [Arisa]
+
+commands:
+  BoundSoul:
+    description: Main command
+    aliases:
+      - bs
+      - bsoul
+      - sb
+permissions:
+  BoundSoul.used:
+    default: true
+  BoundSoul.admin:
+    default: op

@@ -1,0 +1,15 @@
+Version: 1.0
+
+Plugin_Prefix: "&CBoundSoul &e>> "
+AutoBindLore_Before: "&a拾取绑定"
+AutoBindLore_later: "&c认主: &a%Player_Name%"
+IllegalItems: "&C非法物品"
+
+Censor-freq: 500
+#扫描间隔，单位毫秒，推荐1000-100
+useFireworks: true
+useEffect: true
+useSound: true
+TackUpItem: true
+
+BindSuccess: "&f物品 %s% &f被绑定了!"
