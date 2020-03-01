@@ -1,5 +1,6 @@
-package net.augcloud.boundsoul;
+package net.augcloud.boundsoul.core;
 
+import net.augcloud.boundsoul.PluginData;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -10,7 +11,7 @@ import org.bukkit.inventory.PlayerInventory;
  * @author Arisa
  * @date 2016/10/31
  */
-class BoundManager {
+public class BoundManager {
     private final Player player;
     
     private final PlayerInventory inv;
@@ -18,7 +19,7 @@ class BoundManager {
     public BoundManager(Player player1, PlayerInventory inv1) {
         this.player = player1;
         this.inv = inv1;
-        Main.bs.add(this);
+        PluginData.bs.add(this);
     }
     
     public Player getPlayer() {

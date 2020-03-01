@@ -1,5 +1,6 @@
 package net.augcloud.boundsoul;
 
+import net.augcloud.boundsoul.events.ToolOfEvents;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +35,12 @@ class MainCmd implements CommandExecutor {
                         return true;
                     }
                     startTime = System.nanoTime();
-                    YamlConfig.regConfig();
-                    EventListener.autoBindLore =
-                            EventListener.getLowerRe(YamlConfig.getConfig().getString("AutoBindLore_Before"));
-                    EventListener.autoBindLore_later =
-                            EventListener.getLowerRe(YamlConfig.getConfig().getString("AutoBindLore_later"));
-                    EventListener.illegalItems = EventListener.getLowerRe(YamlConfig.getConfig().getString("IllegalItems"));
+                    try {
+                        YamlConfig.regConfig();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ToolOfEvents.inits();
                     endTime = System.nanoTime();
                     sendMessage(sender, "§a重载完成!耗时 " + ((endTime - startTime) / 1000000L) + "ms");
                     return true;
@@ -56,11 +58,11 @@ class MainCmd implements CommandExecutor {
                         if (item != null && item.hasItemMeta()) {
                             ItemMeta id = item.getItemMeta();
                             if (id.hasLore()) {
-                                List<String> Lore = id.getLore();
-                                int index = EventListener.isBind(Lore);
+                                List<String> lore = id.getLore();
+                                int index = ToolOfEvents.isBind(lore);
                                 if (index != -1) {
-                                    Lore.remove(index);
-                                    id.setLore(Lore);
+                                    lore.remove(index);
+                                    id.setLore(lore);
                                     item.setItemMeta(id);
                                     player.updateInventory();
                                 } else {
@@ -88,19 +90,19 @@ class MainCmd implements CommandExecutor {
                         ItemStack item = player.getItemInHand();
                         if (item != null) {
                             ItemMeta id = item.getItemMeta();
-                            List<String> Lore = new ArrayList<>();
+                            List<String> lore = new ArrayList<>();
                             if (id != null && id.hasLore()) {
-                                Lore = id.getLore();
-                                if (Lore.contains(EventListener.autoBindLore)) {
+                                lore = id.getLore();
+                                if (lore.contains(ToolOfEvents.autoBindLore)) {
                                     sendMessage(sender, "Lore已经有绑定标签");
                                     return true;
                                 }
-                                Lore.add(EventListener.autoBindLore);
+                                lore.add(ToolOfEvents.autoBindLore);
                             } else {
-                                Lore.add(EventListener.autoBindLore);
+                                lore.add(ToolOfEvents.autoBindLore);
                             }
-                            if (id != null && !Lore.isEmpty()) {
-                                id.setLore(Lore);
+                            if (id != null && !lore.isEmpty()) {
+                                id.setLore(lore);
                                 item.setItemMeta(id);
                                 player.updateInventory();
                                 return true;
@@ -119,7 +121,7 @@ class MainCmd implements CommandExecutor {
                         sendMessage(sender, "执行此指令需 BoundSoul.admin 权限");
                         return true;
                     }
-                    Main.BoundThread.startThread();
+                    Main.threadManager.getBoundThread().startThread();
                     return true;
                 case 1985708632:
                     if (!"setlore".equals(str)) {
@@ -131,7 +133,7 @@ class MainCmd implements CommandExecutor {
                           ItemStack item = player.getItemInHand();
                           if (item != null && item.getItemMeta() != null) {
                               ItemMeta id = item.getItemMeta();
-                              List<String> list = new ArrayList<String>();
+                              List<String> list = new ArrayList<>();
                               if (id.hasLore()) {
                                 list.addAll(id.getLore());
                               }
@@ -167,7 +169,7 @@ class MainCmd implements CommandExecutor {
             return;
         }
         if (isPlayer) {
-            sender.sendMessage(YamlConfig.getPlugin_Prefix() + msg);
+            sender.sendMessage(YamlConfig.getPluginPrefix() + msg);
             return;
         }
         Main.plugin.getLogger().info(msg.replaceAll("§", ""));

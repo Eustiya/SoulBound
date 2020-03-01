@@ -1,8 +1,10 @@
 package net.augcloud.boundsoul;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  *  SetFiles class
@@ -10,29 +12,41 @@ import java.io.File;
  * @author Arisa
  * @date 2016/10/31
  */
-class YamlConfig {
+public class YamlConfig {
     private static YamlConfiguration Settings = null;
     
-    static void regConfig() {
+    static void regConfig() throws IOException {
         File file = new File(Main.plugin.getDataFolder(), "config.yml");
         if (!file.exists()) {
             Main.plugin.saveResource("config.yml", true);
         }
         file = new File(Main.plugin.getDataFolder(), "config.yml");
         Settings = FileConfig.loadConfiguration(file);
-        if (!"1.0".equals(Settings.getString("Version"))) {
-            Main.plugin.getLogger().info("Error,your plugin version isn't this config");
-            Main.plugin.onDisable();
+        if (!"1.1".equals(Settings.getString("Version"))) {
+            Main.plugin.getLogger().info("错误，你使用的配置不符合当前插件");
+            Main.plugin.getLogger().info("插件会备份后重新生成一份新的配置");
+            Settings.save(new File(Main.plugin.getDataFolder(), "config.yml.old"));
+            file.delete();
+            Main.plugin.saveResource("config.yml", true);
+            file = new File(Main.plugin.getDataFolder(), "config.yml");
+            Settings = FileConfig.loadConfiguration(file);
         }
-        Main.censor_freq = getConfig().getInt("Censor-freq");
+        
+        
+       
     }
     
-    static YamlConfiguration getConfig() {
+    public static ConfigurationSection getLang() {
+        return Settings.getConfigurationSection("Lang");
+    }
+    
+    public static YamlConfiguration getConfig() {
         return Settings;
     }
     
 
-    static String getPlugin_Prefix() {
+   public static String getPluginPrefix() {
         return getConfig().getString("Plugin_Prefix").replaceAll("&", "§");
     }
+    
 }

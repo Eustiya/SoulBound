@@ -1,4 +1,4 @@
-Version: 1.0
+Version: 1.1
 
 Plugin_Prefix: "&CBoundSoul &e>> "
 AutoBindLore_Before: "&a拾取绑定"
@@ -10,6 +10,17 @@ Censor-freq: 500
 useFireworks: true
 useEffect: true
 useSound: true
-TackUpItem: true
+throwOutItem: true
+#背包内有别人物品时会被丢出
+allowThrowItem: true
+#允许丢出自己的物品
+useInteraction: true
+#允许不属于自己的物品交互，仅适用于手持武器...左键或者右键
+#不建议禁止修改后需要重启才能生效
 
 BindSuccess: "&f物品 %s% &f被绑定了!"
+Lang:
+  ClickCancelled: "操作不合法，试图取出没有处置权的物品"
+  DropItemCancelled: "丢出自己已绑物品非法行为"
+  InteractCancelled: "此物品不属于你"
+  PlayerPickupItemCancelled: "拾起物品已经被别人绑定"

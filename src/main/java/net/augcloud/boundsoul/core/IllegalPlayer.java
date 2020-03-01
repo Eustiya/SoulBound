@@ -1,4 +1,4 @@
-package net.augcloud.boundsoul;
+package net.augcloud.boundsoul.core;
 
 import org.bukkit.entity.Player;
 
@@ -10,6 +10,7 @@ import java.util.HashMap;
  *
  * @author Arisa
  * @date 2016/10/31
+ * 不知道是干什么的，不管他了
  */
 public class IllegalPlayer {
     private HashMap<String, Integer> playerUuid = new HashMap();
@@ -19,11 +20,11 @@ public class IllegalPlayer {
         if (this.playerUuid.containsKey(uuid)) {
             Integer times = this.playerUuid.get(uuid);
             if (times.equals(10)) {
-              return true;
+              return false;
             }
             this.playerUuid.put(uuid, times + 1);
         }
-        return false;
+        return true;
     }
     
     public void add(Player player) {
