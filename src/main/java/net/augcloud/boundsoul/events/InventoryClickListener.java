@@ -47,24 +47,24 @@ class InventoryClickListener implements Listener {
         if (clicker instanceof Player) {
             Player player = (Player) clicker;
             if (player.isOp()) {
-                System.out.println(1);
+                
                 return;
             }
             ItemStack item = e.getCurrentItem();
             if (item == null || !item.hasItemMeta()) {
-                System.out.println(2);
+               
                 return;
             }
             ItemMeta id = item.getItemMeta();
             List<String> lore;
             if (!id.hasLore()) {
-                System.out.println(3);
+                
                 return;
             }
             lore = id.getLore();
             int index = ToolOfEvents.isBind(lore);
             if (index == -1) {
-                System.out.println(4);
+         
                 return;
             }
             boolean b  = true;
@@ -72,12 +72,12 @@ class InventoryClickListener implements Listener {
             for (int i = itemStacks.length - 1; i >= 0; i--) {
                 ItemStack itemStack = itemStacks[i];
                  if(itemStack == null || itemStack.getType().equals(Material.AIR)){
-                     System.out.println(i);
+                  
                     b = false;
                     break;
                  }
             }
-            System.out.println(b);
+           
             if(b){
               e.setCancelled(true);
               Utils.sendMessageToPlayer(player, YamlConfig.getLang().getString("ClickCancelled2"));
