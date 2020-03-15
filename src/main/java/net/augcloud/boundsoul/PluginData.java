@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author £ºArisa
- * @date £ºCreated in 2020/3/1 18:43
- * @description£º
+ * @author ï¼šArisa
+ * @date ï¼šCreated in 2020/3/1 18:43
+ * @descriptionï¼š
  * @version: $
  */
 public class PluginData {

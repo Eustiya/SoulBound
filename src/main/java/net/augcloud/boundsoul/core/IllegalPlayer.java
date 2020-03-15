@@ -10,7 +10,7 @@ import java.util.HashMap;
  *
  * @author Arisa
  * @date 2016/10/31
- * ²»ÖªµÀÊÇ¸ÉÊ²Ã´µÄ£¬²»¹ÜËûÁË
+ * ä¸çŸ¥é“æ˜¯å¹²ä»€ä¹ˆçš„ï¼Œä¸ç®¡ä»–äº†
  */
 public class IllegalPlayer {
     private HashMap<String, Integer> playerUuid = new HashMap();

@@ -1,5 +1,5 @@
 /*
- * ?2021 August-soft Corporation. All rights reserved.
+ * ©2021 August-soft Corporation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package net.augcloud.boundsoul.events;
 
 import net.augcloud.boundsoul.YamlConfig;
+import net.augcloud.boundsoul.core.PlayerNDManager;
+import net.augcloud.boundsoul.core.PlayerNDrop;
 import net.augcloud.boundsoul.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,33 +34,21 @@ import java.util.List;
 
 /**
  * @author ：Arisa
- * @date ：Created in 2020/3/1 18:48
+ * @date ：Created in 2020/3/15 14:17
  * @description：
  * @version: $
  */
-class PlayerDropItemListener implements Listener {
+public class PlayerLoginListener implements Listener {
     
     @EventHandler(priority = EventPriority.LOWEST)
-    public void whenPlayerDropItem(PlayerDropItemEvent e) {
+    public void whenPlayerLogin(PlayerLoginEvent e) {
         Player player = e.getPlayer();
-        
-        if (player.isOp()) {
+        if(!PlayerNDManager.contains(player)){
             return;
         }
-        ItemStack item = e.getItemDrop().getItemStack();
-        if (item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta()) {
-            return;
-        }
-        ItemMeta ids = item.getItemMeta();
-        if (!ids.hasLore()) {
-            return;
-        }
-        List<String> lore = ids.getLore();
-        int index = ToolOfEvents.isBind(lore);
-        if (index != -1 && ToolOfEvents.getBinderName(lore.get(index)).equals(player.getName())) {
-            e.setCancelled(true);
-            Utils.sendMessageToPlayer(player, YamlConfig.getLang().getString("DropItemCancelled"));
-        }
+        PlayerNDrop playerNDrop = PlayerNDManager.get(player);
+        player.getInventory().setArmorContents(playerNDrop.getArmors());
+        player.getInventory().setExtraContents(playerNDrop.getInventories());
+        PlayerNDManager.remove(player);
     }
-    
 }

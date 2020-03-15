@@ -22,9 +22,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * @author £ºArisa
- * @date £ºCreated in 2020/3/1 18:14
- * @description£º
+ * @author ï¼šArisa
+ * @date ï¼šCreated in 2020/3/1 18:14
+ * @descriptionï¼š
  * @version: $
  */
 public class Utils {
@@ -36,7 +36,7 @@ public class Utils {
     }
     
     public static String getLowerAndReplace(String args) {
-        return args.toLowerCase().replaceAll("&", "¡ì");
+        return args.toLowerCase().replaceAll("&", "Â§");
     }
     
     public static ItemMeta hasLore(ItemStack item) {
@@ -48,6 +48,6 @@ public class Utils {
     }
     
     public static void sendMessageToPlayer(Player player, String msg) {
-        player.sendMessage(YamlConfig.getPluginPrefix() + msg.replaceAll("&","¡ì"));
+        player.sendMessage(YamlConfig.getPluginPrefix() + msg.replaceAll("&","Â§"));
     }
 }

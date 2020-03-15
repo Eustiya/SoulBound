@@ -16,19 +16,19 @@ public class YamlConfig {
     private static YamlConfiguration Settings = null;
     
     static void regConfig() throws IOException {
-        File file = new File(Main.plugin.getDataFolder(), "config.yml");
+        File file = new File(BoundSoul.plugin.getDataFolder(), "config.yml");
         if (!file.exists()) {
-            Main.plugin.saveResource("config.yml", true);
+            BoundSoul.plugin.saveResource("config.yml", true);
         }
-        file = new File(Main.plugin.getDataFolder(), "config.yml");
+        file = new File(BoundSoul.plugin.getDataFolder(), "config.yml");
         Settings = FileConfig.loadConfiguration(file);
-        if (!"1.1".equals(Settings.getString("Version"))) {
-            Main.plugin.getLogger().info("错误，你使用的配置不符合当前插件");
-            Main.plugin.getLogger().info("插件会备份后重新生成一份新的配置");
-            Settings.save(new File(Main.plugin.getDataFolder(), "config.yml.old"));
-            file.delete();
-            Main.plugin.saveResource("config.yml", true);
-            file = new File(Main.plugin.getDataFolder(), "config.yml");
+        if (!"1.3".equals(Settings.getString("Version"))) {
+            BoundSoul.plugin.getLogger().info("错误，你使用的配置不符合当前插件");
+            BoundSoul.plugin.getLogger().info("插件会备份后重新生成一份新的配置");
+            Settings.save(new File(BoundSoul.plugin.getDataFolder(), "config.yml.old"));
+            boolean a = file.delete();
+            BoundSoul.plugin.saveResource("config.yml", true);
+            file = new File(BoundSoul.plugin.getDataFolder(), "config.yml");
             Settings = FileConfig.loadConfiguration(file);
         }
         

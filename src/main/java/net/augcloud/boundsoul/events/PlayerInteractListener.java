@@ -16,7 +16,7 @@
 
 package net.augcloud.boundsoul.events;
 
-import net.augcloud.boundsoul.Main;
+import net.augcloud.boundsoul.BoundSoul;
 import net.augcloud.boundsoul.YamlConfig;
 import net.augcloud.boundsoul.utils.Utils;
 import org.bukkit.Material;
@@ -31,9 +31,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 /**
- * @author £ºArisa
- * @date £ºCreated in 2020/3/1 19:14
- * @description£º
+ * @author ï¼šArisa
+ * @date ï¼šCreated in 2020/3/1 19:14
+ * @descriptionï¼š
  * @version: $
  */
 class PlayerInteractListener implements Listener {
@@ -56,7 +56,8 @@ class PlayerInteractListener implements Listener {
         List<String> lore = ids.getLore();
         int bindex = ToolOfEvents.isBind(lore);
         if (bindex != -1 && !ToolOfEvents.getBinderName(lore.get(bindex)).equals(player.getName())) {
-            if (Main.illegalPlayer.contains(player)) {
+            if (BoundSoul.illegalPlayer.contains(player)) {
+                
                 return;
             }
             

@@ -1,5 +1,7 @@
 package net.augcloud.boundsoul;
 
+import net.augcloud.boundsoul.core.PermitInventory;
+import net.augcloud.boundsoul.events.InventoryOpenListener;
 import net.augcloud.boundsoul.events.ToolOfEvents;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,17 +20,14 @@ import java.util.List;
  * @author Arisa
  * @date 2016/10/31
  */
-class MainCmd implements CommandExecutor {
+class Commands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command myCommand, String lable, String[] args) {
         if (args.length >= 1) {
             long endTime, startTime;
             String str;
-            switch ((str = args[0].toLowerCase()).hashCode()) {
-                case -934641255:
-                    if (!"reload".equals(str)) {
-                      break;
-                    }
+            switch (str = args[0].toLowerCase()) {
+                case "reload":
                     if ((!(sender instanceof Player) || !sender.isOp()) && !sender.hasPermission("BoundSoul.admin") &&
                             !(sender instanceof org.bukkit.command.ConsoleCommandSender)) {
                         sendMessage(sender, "执行此指令需 BoundSoul.admin 权限");
@@ -41,13 +40,11 @@ class MainCmd implements CommandExecutor {
                         e.printStackTrace();
                     }
                     ToolOfEvents.inits();
+                    PermitInventory.inits();
                     endTime = System.nanoTime();
                     sendMessage(sender, "§a重载完成!耗时 " + ((endTime - startTime) / 1000000L) + "ms");
                     return true;
-                case -840745386:
-                    if (!"unbind".equals(str)) {
-                      break;
-                    }
+                case "unbind":
                     if (!(sender instanceof Player)) {
                         sendMessage(sender, "请以玩家身份输入此指令?");
                         return true;
@@ -77,10 +74,8 @@ class MainCmd implements CommandExecutor {
                         sendMessage(sender, "执行此指令需 BoundSoul.admin 权限");
                     }
                     return true;
-                case 3023933:
-                    if (!"bind".equals(str)) {
-                      break;
-                    }
+                case "bind":
+                   
                     if (!(sender instanceof Player)) {
                         sendMessage(sender, "请以玩家身份输入此指令?");
                         return true;
@@ -113,20 +108,37 @@ class MainCmd implements CommandExecutor {
                         sendMessage(sender, "执行此指令需 BoundSoul.used 权限");
                     }
                     return true;
-                case 109757538:
-                    if (!"start".equals(str)) {
-                      break;
-                    }
+                case "checking":
                     if ((!(sender instanceof Player) || !sender.isOp()) && !sender.hasPermission("BoundSoul.admin") && !(sender instanceof org.bukkit.command.ConsoleCommandSender)) {
                         sendMessage(sender, "执行此指令需 BoundSoul.admin 权限");
                         return true;
                     }
-                    Main.threadManager.getBoundThread().startThread();
-                    return true;
-                case 1985708632:
-                    if (!"setlore".equals(str)) {
-                      break;
+                    if(args.length<=1){
+                        sendMessage(sender, "§c参数太短");
+                        return true;
                     }
+                    if(!(sender instanceof Player)){
+                        sendMessage(sender, "不要在后台执行这条指令......");
+                       return true;
+                    }
+                    if("on".equals(args[1])){
+                        InventoryOpenListener.setOpen(((Player)sender).getName());
+                        sendMessage(sender, "§a查询已开启");
+                    }else{
+                        InventoryOpenListener.close();
+                        sendMessage(sender, "§a查询已关闭");
+                    }
+                    return true;
+                case "start":
+                    
+                    if ((!(sender instanceof Player) || !sender.isOp()) && !sender.hasPermission("BoundSoul.admin") && !(sender instanceof org.bukkit.command.ConsoleCommandSender)) {
+                        sendMessage(sender, "执行此指令需 BoundSoul.admin 权限");
+                        return true;
+                    }
+                    BoundSoul.threadManager.getBoundThread().startThread();
+                    return true;
+                case "setlore":
+                    
                     if (sender instanceof Player && sender.isOp()) {
                       if (args.length >= 2) {
                           Player player = (Player) sender;
@@ -154,8 +166,6 @@ class MainCmd implements CommandExecutor {
                 return true;
               
             }
-            help(sender);
-            return true;
         }
         help(sender);
         return false;
@@ -172,7 +182,7 @@ class MainCmd implements CommandExecutor {
             sender.sendMessage(YamlConfig.getPluginPrefix() + msg);
             return;
         }
-        Main.plugin.getLogger().info(msg.replaceAll("§", ""));
+        BoundSoul.plugin.getLogger().info(msg.replaceAll("§", ""));
     }
     
     private static void help(CommandSender sender) {
@@ -187,13 +197,15 @@ class MainCmd implements CommandExecutor {
             sender.sendMessage("§7- §3/bs §a显示全部命令");
             sender.sendMessage("§7- §3/bs bind §a给手中物品添加绑定标签");
             sender.sendMessage("§7- §3/bs unbind §a解除手中物品绑定");
+            sender.sendMessage("§7- §3/bs checking [on/off] §a开启或关闭容器debug模式，后台输出类型");
             sender.sendMessage("§7- §3/bs reload §a重新加载插件");
             return;
         }
-        Main.plugin.getLogger().info(" BoundSoul Used Help #Power by Arisa");
-        Main.plugin.getLogger().info("- /bs 显示全部命令");
-        Main.plugin.getLogger().info("- /bs bind 给手中物品添加绑定标签");
-        Main.plugin.getLogger().info("- /bs unbind 解除手中物品绑定");
-        Main.plugin.getLogger().info("- /bs reload 重新加载插件");
+        BoundSoul.plugin.getLogger().info(" BoundSoul Used Help #Power by Arisa");
+        BoundSoul.plugin.getLogger().info("- /bs 显示全部命令");
+        BoundSoul.plugin.getLogger().info("- /bs bind 给手中物品添加绑定标签");
+        BoundSoul.plugin.getLogger().info("- /bs unbind 解除手中物品绑定");
+        BoundSoul.plugin.getLogger().info("- /bs checking [on/off] 开启或关闭容器debug模式，后台输出类型");
+        BoundSoul.plugin.getLogger().info("- /bs reload 重新加载插件");
     }
 }

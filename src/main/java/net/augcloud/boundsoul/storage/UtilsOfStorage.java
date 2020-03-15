@@ -1,5 +1,5 @@
 /*
- * ?2021 August-soft Corporation. All rights reserved.
+ * ©2021 August-soft Corporation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,34 +14,13 @@
  * limitations under the License.
  */
 
-package net.augcloud.boundsoul.core;
-
-import net.augcloud.boundsoul.YamlConfig;
+package net.augcloud.boundsoul.storage;
 
 /**
  * @author ：Arisa
- * @date ：Created in 2020/3/1 18:27
+ * @date ：Created in 2020/3/13 16:26
  * @description：
  * @version: $
  */
-public class ThreadManager {
-    
-    private BoundThread boundThread = null;
-    
-    public ThreadManager(){
-    
-        
-    }
-    
-    public void instantiation() {
-        boundThread = new BoundThread();
-        BoundThread.censor_freq = YamlConfig.getConfig().getInt("Censor-freq");
-        boundThread.init();
-    }
-    
-     public BoundThread getBoundThread(){
-        return this.boundThread;
-     }
-     
-    
+public class UtilsOfStorage {
 }

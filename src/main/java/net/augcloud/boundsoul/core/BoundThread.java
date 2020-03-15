@@ -17,13 +17,13 @@
 package net.augcloud.boundsoul.core;
 
 import net.augcloud.boundsoul.PluginData;
-import net.augcloud.boundsoul.Main;
+import net.augcloud.boundsoul.BoundSoul;
 import net.augcloud.boundsoul.events.ToolOfEvents;
 
 /**
- * @author £ºArisa
- * @date £ºCreated in 2020/3/1 18:25
- * @description£º
+ * @author ï¼šArisa
+ * @date ï¼šCreated in 2020/3/1 18:25
+ * @descriptionï¼š
  * @version: $
  */
 public class BoundThread {
@@ -73,8 +73,8 @@ public class BoundThread {
                         this.running = false;
                         BoundThread.this.updataInvThread.stop();
                         BoundThread.this.startThread();
-                        Main.plugin.getLogger()
-                                .info("¾¯¸æ!²å¼şÒì²½Ïß³ÌÔËĞĞÖĞ·¢Éú´íÎó±ÀÀ££¬¼ì²â°ó¶¨¹¦ÄÜÒÑ¾­Ê§Ğ§!!Çë½ØÍ¼ÍêÕû´íÎó±¨¸æÄÚÈİ²¢Éê±¨ÖÁQQ1131271403Arisa½øĞĞĞŞ¸´£¬ÕıÔÚÖØÆôÏß³Ì");
+                        BoundSoul.plugin.getLogger()
+                                .info("è­¦å‘Š!æ’ä»¶å¼‚æ­¥çº¿ç¨‹è¿è¡Œä¸­å‘ç”Ÿé”™è¯¯å´©æºƒï¼Œæ£€æµ‹ç»‘å®šåŠŸèƒ½å·²ç»å¤±æ•ˆ!!è¯·æˆªå›¾å®Œæ•´é”™è¯¯æŠ¥å‘Šå†…å®¹å¹¶ç”³æŠ¥è‡³QQ1131271403Arisaè¿›è¡Œä¿®å¤ï¼Œæ­£åœ¨é‡å¯çº¿ç¨‹");
                         e.printStackTrace();
                     }
                 }
@@ -82,7 +82,7 @@ public class BoundThread {
         };
         this.updataInvThread = new Thread(runnable, "Updata-Thread");
         this.updataInvThread.start();
-        Main.plugin.getLogger().info("Ïß³ÌÔËĞĞÖĞ");
+        BoundSoul.plugin.getLogger().info("çº¿ç¨‹è¿è¡Œä¸­");
     }
     
     private void checkThread() {
@@ -96,12 +96,12 @@ public class BoundThread {
                         if (!BoundThread.this.updataInvThread.isAlive()) {
                             BoundThread.this.updataInvThread.stop();
                             BoundThread.this.startThread();
-                            Main.plugin.getLogger().info("·¢ÏÖ¼ì²âÏß³Ì²»ÔËĞĞ£¬×Ô¶¯¼¤»îÁËËü");
+                            BoundSoul.plugin.getLogger().info("å‘ç°æ£€æµ‹çº¿ç¨‹ä¸è¿è¡Œï¼Œè‡ªåŠ¨æ¿€æ´»äº†å®ƒ");
                         }
-                        Main.illegalPlayer.ruin();
+                        BoundSoul.illegalPlayer.ruin();
                         Thread.sleep(20000L);
                     } catch (InterruptedException e) {
-                        Main.plugin.getLogger().info("¼ì²âÏß³Ì±ÀÀ£");
+                        BoundSoul.plugin.getLogger().info("æ£€æµ‹çº¿ç¨‹å´©æºƒ");
                         this.running = false;
                         BoundThread.this.checkThread.stop();
                         BoundThread.this.checkThread();
@@ -112,6 +112,6 @@ public class BoundThread {
         };
         this.checkThread = new Thread(runnable, "Check-Thread");
         this.checkThread.start();
-        Main.plugin.getLogger().info("¼ì²âÏß³ÌÔËĞĞ£¬´ËÏß³Ì»áÃ¿10ÃëÈ·ÈÏÒ»´ÎÖ÷Ïß³Ì´æ»î£¬Èç¹ûÍ£Ö¹»á×Ô¶¯ÖØÆô");
+        BoundSoul.plugin.getLogger().info("æ£€æµ‹çº¿ç¨‹è¿è¡Œï¼Œæ­¤çº¿ç¨‹ä¼šæ¯10ç§’ç¡®è®¤ä¸€æ¬¡ä¸»çº¿ç¨‹å­˜æ´»ï¼Œå¦‚æœåœæ­¢ä¼šè‡ªåŠ¨é‡å¯");
     }
 }

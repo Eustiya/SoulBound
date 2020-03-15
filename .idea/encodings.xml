@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/net" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/net" charset="GBK" />
-    <file url="PROJECT" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/PluginData.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/core/BoundThread.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/core/IllegalPlayer.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/core/ThreadManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/events/InventoryClickListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/events/PlayerDropItemListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/events/PlayerInteractListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/events/PlayerPickupItemListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/events/ToolOfEvents.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/utils/Utils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/net/augcloud/boundsoul/utils/UtilsOfEffect.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

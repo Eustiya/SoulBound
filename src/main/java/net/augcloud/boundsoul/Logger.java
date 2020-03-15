@@ -1,5 +1,5 @@
 /*
- * ?2021 August-soft Corporation. All rights reserved.
+ * ©2021 August-soft Corporation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,34 +14,24 @@
  * limitations under the License.
  */
 
-package net.augcloud.boundsoul.core;
+package net.augcloud.boundsoul;
 
-import net.augcloud.boundsoul.YamlConfig;
+import java.util.logging.Level;
 
 /**
  * @author ：Arisa
- * @date ：Created in 2020/3/1 18:27
+ * @date ：Created in 2020/3/12 17:20
  * @description：
  * @version: $
  */
-public class ThreadManager {
+public class Logger {
     
-    private BoundThread boundThread = null;
-    
-    public ThreadManager(){
-    
-        
+    public static void printlnInfo(String msg){
+        BoundSoul.plugin.getServer().getLogger().info(msg);
     }
     
-    public void instantiation() {
-        boundThread = new BoundThread();
-        BoundThread.censor_freq = YamlConfig.getConfig().getInt("Censor-freq");
-        boundThread.init();
+    public static void printlnError(String msg){
+        BoundSoul.plugin.getServer().getLogger().log(Level.WARNING,msg);
     }
-    
-     public BoundThread getBoundThread(){
-        return this.boundThread;
-     }
-     
     
 }

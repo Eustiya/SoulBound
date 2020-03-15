@@ -30,9 +30,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 /**
- * @author £ºArisa
- * @date £ºCreated in 2020/3/1 18:48
- * @description£º
+ * @author: Arisa
+ * @date: Created in 2020/3/1 18:48
+ * @descriptionï¼š
  * @version: $
  */
 class PlayerPickupItemListener implements Listener {
@@ -59,7 +59,9 @@ class PlayerPickupItemListener implements Listener {
         }
         List<String> lore = ids.getLore();
         int index = ToolOfEvents.isBind(lore);
-        if (index != -1 && !ToolOfEvents.getBinderName(lore.get(index)).equals(player.getName())) {
+        String a = ToolOfEvents.getBinderName(lore.get(index));
+        if (index != -1 && !a.equals(player.getName())) {
+            
             e.setCancelled(true);
             Utils.sendMessageToPlayer(player, YamlConfig.getLang().getString("PlayerPickupItemCancelled"));
         }

@@ -1,9 +1,10 @@
-Version: 1.1
+Version: 1.4
 
-Plugin_Prefix: "&CBoundSoul &e>> "
-AutoBindLore_Before: "&a拾取绑定"
-AutoBindLore_later: "&c认主: &a%Player_Name%"
-IllegalItems: "&C非法物品"
+Plugin_Prefix: "§CBoundSoul §e>> "
+AutoBindLore_Before: "§a拾取绑定"
+#AutoBindLore_later: "§c认主: §a%player_name%"
+AutoBindLore_later: "§c认主: §a%player_name%"
+IllegalItems: "§C非法物品"
 
 Censor-freq: 500
 #扫描间隔，单位毫秒，推荐1000-100
@@ -17,10 +18,15 @@ allowThrowItem: true
 useInteraction: true
 #允许不属于自己的物品交互，仅适用于手持武器...左键或者右键
 #不建议禁止修改后需要重启才能生效
+useBindNotDrop: true
+#绑定物品死亡不掉落
 
-BindSuccess: "&f物品 %s% &f被绑定了!"
+AllowInventory: []
+
+BindSuccess: "§f物品 %s% §f被绑定了!"
 Lang:
   ClickCancelled: "操作不合法，试图取出没有处置权的物品"
+  ClickCancelled2: "背包已满的时候禁止点击绑定物品！"
   DropItemCancelled: "丢出自己已绑物品非法行为"
   InteractCancelled: "此物品不属于你"
   PlayerPickupItemCancelled: "拾起物品已经被别人绑定"

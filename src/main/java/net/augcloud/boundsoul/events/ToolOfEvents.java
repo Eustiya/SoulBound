@@ -16,7 +16,7 @@
 
 package net.augcloud.boundsoul.events;
 
-import net.augcloud.boundsoul.Main;
+import net.augcloud.boundsoul.BoundSoul;
 import net.augcloud.boundsoul.PluginData;
 import net.augcloud.boundsoul.YamlConfig;
 import net.augcloud.boundsoul.core.BoundManager;
@@ -33,9 +33,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author £∫Arisa
- * @date £∫Created in 2020/3/1 18:50
- * @description£∫
+ * @author ÔºöArisa
+ * @date ÔºöCreated in 2020/3/1 18:50
+ * @descriptionÔºö
  * @version: $
  */
 public class ToolOfEvents {
@@ -43,16 +43,27 @@ public class ToolOfEvents {
     public static String autoBindLore;
     private static String autoBindLore_later;
     public static String illegalItems;
+    private static boolean throwOutItem = false;
     
     public static void inits(){
         autoBindLore = Utils.getLowerAndReplace(YamlConfig.getConfig().getString("AutoBindLore_Before"));
         autoBindLore_later = Utils.getLowerAndReplace(YamlConfig.getConfig().getString("AutoBindLore_later"));
         illegalItems = Utils.getLowerAndReplace(YamlConfig.getConfig().getString("IllegalItems"));
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerPickupItemListener(),Main.plugin);
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerDropItemListener(),Main.plugin);
-        Bukkit.getServer().getPluginManager().registerEvents(new InventoryClickListener(),Main.plugin);
+        throwOutItem = YamlConfig.getConfig().getBoolean("throwOutItem");
+        if(!YamlConfig.getConfig().getBoolean("allowThrowItem")){
+            Bukkit.getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), BoundSoul.plugin);
+        }
+        Bukkit.getServer().getPluginManager().registerEvents(new InventoryOpenListener(), BoundSoul.plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerPickupItemListener(), BoundSoul.plugin);;
+        Bukkit.getServer().getPluginManager().registerEvents(new InventoryClickListener(), BoundSoul.plugin);
         if(YamlConfig.getConfig().getBoolean("useInteraction")){
-            Bukkit.getServer().getPluginManager().registerEvents(new PlayerInteractListener(),Main.plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), BoundSoul.plugin);
+        }
+        if(YamlConfig.getConfig().getBoolean("useBindNotDrop")){
+            Bukkit.getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), BoundSoul.plugin);;
+            Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeathListener(), BoundSoul.plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new PlayerLoginListener(), BoundSoul.plugin);
+    
         }
     }
     
@@ -91,8 +102,8 @@ public class ToolOfEvents {
                 ItemStack item = iter.next();
                 ItemMeta id = Utils.hasLore(item);
                 if (id != null) {
-                    if (Main.debug) {
-                        Main.plugin.getLogger().info(b.getPlayer() + "|" + item);
+                    if (BoundSoul.debug) {
+                        BoundSoul.plugin.getLogger().info(b.getPlayer() + "|" + item);
                     }
                     List<String> lore = id.getLore();
                     int bindex = isBind(lore);
@@ -108,32 +119,39 @@ public class ToolOfEvents {
                         if (id.hasDisplayName()) {
                             Utils.sendMessageToPlayer(player, YamlConfig.getConfig()
                                     .getString("BindSuccess")
-                                    .replaceAll("&", "°Ï")
+                                    .replaceAll("&", "¬ß")
                                     .replaceAll("%s%", id.getDisplayName()));
                         } else {
                             Utils.sendMessageToPlayer(player, YamlConfig.getConfig().getString("BindSuccess")
-                                    .replaceAll("&", "°Ï").replaceAll("%s%", String.valueOf(item.getTypeId())));
+                                    .replaceAll("&", "¬ß").replaceAll("%s%", String.valueOf(item.getTypeId())));
                         }
                         
                     }
-                    if (bindex != -1 && !getBinderName(lore.get(bindex)).equals(player.getName())) {
-                        if (Main.illegalPlayer.contains(player)) {
-                            return;
+                    if (bindex != -1) {
+                        String a = getBinderName(lore.get(bindex));
+                        if("".equals(a)){
+                          return;
                         }
-                        if (id.hasDisplayName()) {
-                            Utils.sendMessageToPlayer(player, "°ÏfŒÔ∆∑ " + id.getDisplayName() + " °Ïf≤ª Ù”⁄ƒ„");
-                        } else {
-                            Utils.sendMessageToPlayer(player, "°ÏfŒÔ∆∑ " + item.getTypeId() + " °Ïf≤ª Ù”⁄ƒ„");
+                        if(!getBinderName(lore.get(bindex)).equals(player.getName())){
+                            if (BoundSoul.illegalPlayer.contains(player)) {
+                                return;
+                            }
+                            if (id.hasDisplayName()) {
+                                Utils.sendMessageToPlayer(player, "¬ßfÁâ©ÂìÅ " + id.getDisplayName() + " ¬ßf‰∏çÂ±û‰∫é‰Ω†");
+                            } else {
+                                Utils.sendMessageToPlayer(player, "¬ßfÁâ©ÂìÅ " + item.getTypeId() + " ¬ßf‰∏çÂ±û‰∫é‰Ω†");
+                            }
+                            Utils.sendMessageToPlayer(player, "¬ßc‰∏çÂêàÊ≥ïÁâ©ÂìÅ‰ºöË¢´‰∏¢Âá∫");
+                            lore.add(illegalItems);
+                            id.setLore(lore);
+                            item.setItemMeta(id);
+                            if (!YamlConfig.getConfig().getBoolean("TackUpItem")) {
+                                player.getWorld()
+                                        .dropItem(player.getLocation(), item);
+                            }
+                            b.changeInv(null, i);
                         }
-                        Utils.sendMessageToPlayer(player, "°Ïc≤ª∫œ∑®ŒÔ∆∑ª·±ª∂™≥ˆ");
-                        lore.add(illegalItems);
-                        id.setLore(lore);
-                        item.setItemMeta(id);
-                        if (!YamlConfig.getConfig().getBoolean("TackUpItem")) {
-                            player.getWorld()
-                                    .dropItem(player.getLocation(), item);
-                        }
-                        b.changeInv(null, i);
+                        
                     }
                 }
                 i++;

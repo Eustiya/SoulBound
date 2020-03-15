@@ -16,7 +16,7 @@
 
 package net.augcloud.boundsoul.utils;
 
-import net.augcloud.boundsoul.Main;
+import net.augcloud.boundsoul.BoundSoul;
 import net.augcloud.boundsoul.YamlConfig;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
@@ -25,9 +25,9 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
- * @author £ºArisa
- * @date £ºCreated in 2020/3/1 18:11
- * @description£º
+ * @author ï¼šArisa
+ * @date ï¼šCreated in 2020/3/1 18:11
+ * @descriptionï¼š
  * @version: $
  */
 public class UtilsOfEffect {
@@ -39,7 +39,7 @@ public class UtilsOfEffect {
             public void run() {
                 fwtest(player);
             }
-        }).runTask(Main.plugin);
+        }).runTask(BoundSoul.plugin);
         sendSound(player);
         
     }
@@ -78,7 +78,7 @@ public class UtilsOfEffect {
                         this.a++;
                         world.playEffect(location, Effect.FIREWORKS_SPARK, 1);
                     }
-                }).runTaskTimer(Main.plugin, 0L, 10L);
+                }).runTaskTimer(BoundSoul.plugin, 0L, 10L);
             }
         } else {
             (new BukkitRunnable() {
@@ -93,7 +93,7 @@ public class UtilsOfEffect {
                     this.a++;
                     world.playEffect(location, Effect.FIREWORKS_SPARK, 1);
                 }
-            }).runTaskTimer(Main.plugin, 0L, 10L);
+            }).runTaskTimer(BoundSoul.plugin, 0L, 10L);
         }
     }
     

@@ -1,6 +1,6 @@
 name: Boundsoul
 version: ${project.version}
-main: net.augcloud.boundsoul.Main
+main: net.augcloud.boundsoul.BoundSoul
 authors: [Arisa]
 
 commands:
